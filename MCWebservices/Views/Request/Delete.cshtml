@@ -1,0 +1,46 @@
+﻿@model MCWebservices.Request
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Request</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Student.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Student.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Teacher.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Teacher.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Type)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Type)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

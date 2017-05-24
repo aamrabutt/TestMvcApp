@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SensieLocatorDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SensieLocatorDatabaseModelStoreContainer">
+          <EntitySet Name="Request" EntityType="SensieLocatorDatabaseModel.Store.Request" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Student" EntityType="SensieLocatorDatabaseModel.Store.Student" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Teacher" EntityType="SensieLocatorDatabaseModel.Store.Teacher" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Request_ToTable" Association="SensieLocatorDatabaseModel.Store.FK_Request_ToTable">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ToTable_1" Association="SensieLocatorDatabaseModel.Store.FK_Request_ToTable_1">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SenderId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiverId" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="RollNumber" />
+          </Key>
+          <Property Name="RollNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Post" Type="nvarchar" MaxLength="50" />
+          <Property Name="Education" Type="nvarchar(max)" />
+          <Property Name="Available" Type="bit" />
+          <Property Name="Location" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Request_ToTable">
+          <End Role="Student" Type="SensieLocatorDatabaseModel.Store.Student" Multiplicity="0..1" />
+          <End Role="Request" Type="SensieLocatorDatabaseModel.Store.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="RollNumber" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ToTable_1">
+          <End Role="Teacher" Type="SensieLocatorDatabaseModel.Store.Teacher" Multiplicity="0..1" />
+          <End Role="Request" Type="SensieLocatorDatabaseModel.Store.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ReceiverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SensieLocatorDatabaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SensieLocatorDatabaseEntities2" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Requests" EntityType="SensieLocatorDatabaseModel.Request" />
+          <EntitySet Name="Students" EntityType="SensieLocatorDatabaseModel.Student" />
+          <EntitySet Name="Teachers" EntityType="SensieLocatorDatabaseModel.Teacher" />
+          <AssociationSet Name="FK_Request_ToTable" Association="SensieLocatorDatabaseModel.FK_Request_ToTable">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ToTable_1" Association="SensieLocatorDatabaseModel.FK_Request_ToTable_1">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SenderId" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ReceiverId" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="Type" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Student" Relationship="SensieLocatorDatabaseModel.FK_Request_ToTable" FromRole="Request" ToRole="Student" />
+          <NavigationProperty Name="Teacher" Relationship="SensieLocatorDatabaseModel.FK_Request_ToTable_1" FromRole="Request" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="RollNumber" />
+          </Key>
+          <Property Name="RollNumber" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Requests" Relationship="SensieLocatorDatabaseModel.FK_Request_ToTable" FromRole="Student" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Post" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Education" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Available" Type="Boolean" />
+          <Property Name="Location" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Requests" Relationship="SensieLocatorDatabaseModel.FK_Request_ToTable_1" FromRole="Teacher" ToRole="Request" />
+        </EntityType>
+        <Association Name="FK_Request_ToTable">
+          <End Role="Student" Type="SensieLocatorDatabaseModel.Student" Multiplicity="0..1" />
+          <End Role="Request" Type="SensieLocatorDatabaseModel.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="RollNumber" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ToTable_1">
+          <End Role="Teacher" Type="SensieLocatorDatabaseModel.Teacher" Multiplicity="0..1" />
+          <End Role="Request" Type="SensieLocatorDatabaseModel.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ReceiverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SensieLocatorDatabaseModelStoreContainer" CdmEntityContainer="SensieLocatorDatabaseEntities2">
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="SensieLocatorDatabaseModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="SensieLocatorDatabaseModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="RollNumber" ColumnName="RollNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="SensieLocatorDatabaseModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Post" ColumnName="Post" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

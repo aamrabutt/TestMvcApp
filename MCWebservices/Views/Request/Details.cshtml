@@ -1,0 +1,43 @@
+﻿@model MCWebservices.Request
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Request</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Student.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Student.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Teacher.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Teacher.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Type)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Type)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

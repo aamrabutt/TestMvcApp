@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SensieLocatorDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="SensieLocatorDatabaseModelStoreContainer">
+    <EntitySet Name="Request" EntityType="SensieLocatorDatabaseModel.Store.Request" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Student" EntityType="SensieLocatorDatabaseModel.Store.Student" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Teacher" EntityType="SensieLocatorDatabaseModel.Store.Teacher" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Request_ToTable" Association="SensieLocatorDatabaseModel.Store.FK_Request_ToTable">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request_ToTable_1" Association="SensieLocatorDatabaseModel.Store.FK_Request_ToTable_1">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="SenderId" Type="nvarchar" MaxLength="50" />
+    <Property Name="ReceiverId" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateTime" Type="datetime" />
+    <Property Name="Type" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="RollNumber" />
+    </Key>
+    <Property Name="RollNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Post" Type="nvarchar" MaxLength="50" />
+    <Property Name="Education" Type="nvarchar(max)" />
+    <Property Name="Available" Type="bit" />
+    <Property Name="Location" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_Request_ToTable">
+    <End Role="Student" Type="SensieLocatorDatabaseModel.Store.Student" Multiplicity="0..1" />
+    <End Role="Request" Type="SensieLocatorDatabaseModel.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="RollNumber" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="SenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request_ToTable_1">
+    <End Role="Teacher" Type="SensieLocatorDatabaseModel.Store.Teacher" Multiplicity="0..1" />
+    <End Role="Request" Type="SensieLocatorDatabaseModel.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="ReceiverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
